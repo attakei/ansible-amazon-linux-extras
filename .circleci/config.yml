@@ -1,0 +1,14 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: amazonlinux:2
+    steps:
+      - run: amazon-linux-extras install -y ansible2
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
