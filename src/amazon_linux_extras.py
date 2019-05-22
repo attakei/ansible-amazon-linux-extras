@@ -42,3 +42,36 @@ EXAMPLES = '''
   ansible_linux_extras:
     name: vim
 '''
+
+from ansible.module_utils.basic import AnsibleModule
+
+
+def run_module():
+    module_args = dict(
+        name=dict(type='str', required=True),
+        state=dict(type='str', required=True, default='present'),
+    )
+
+    result = dict(
+        changed=False,
+        original_message='',
+        message='',
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args,
+        supports_check_mode=True,
+    )
+
+    if module.check_mode:
+        module.exit_json(**result)
+
+    module.exit_json(**result)
+
+
+def main():
+    run_module()
+
+
+if __name__ == '__main__':
+    main()
