@@ -74,7 +74,7 @@ class Topic(object):
 def run_module():
     module_args = dict(
         name=dict(type='str', required=True),
-        state=dict(type='str', required=True, default='present'),
+        state=dict(type='str', required=False, default='present'),
     )
 
     result = dict(
