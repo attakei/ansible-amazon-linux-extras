@@ -46,6 +46,31 @@ EXAMPLES = '''
 from ansible.module_utils.basic import AnsibleModule
 
 
+class Topic(object):
+    """Topic on amazon extra library
+    """
+    def __init__(self, name, version, status):
+        self.name = name
+        self.version = version
+        self.status = status
+
+    @classmethod
+    def from_text(cls, line):
+        import re
+        regex = re.compile(
+            '\s+\d+\s+'
+            '(?P<name>\S+)\s+'
+            '(?P<status>\S+)\s+'
+            '.+'
+        )
+        matched = regex.match(line)
+        name_version = matched.group('name').split('=')
+        name = name_version[0]
+        version = name_version[1] if len(name_version) > 1 else None
+        status = matched.group('status')
+        return cls(name, version, status)
+
+
 def run_module():
     module_args = dict(
         name=dict(type='str', required=True),
