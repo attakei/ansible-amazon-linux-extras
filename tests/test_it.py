@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-import amazon_linux_extras
+import amzn2extra
 
 
 def _run_module(monkeypatch, param):
@@ -12,14 +12,14 @@ def _run_module(monkeypatch, param):
     }
     with pytest.raises(SystemExit) as wrapped:
         monkeypatch.setattr('sys.stdin', io.BytesIO(json.dumps(param)))
-        amazon_linux_extras.main()
+        amzn2extra.main()
     return wrapped.value
 
 
 def test_no_args(capsys, monkeypatch):
     with pytest.raises(SystemExit) as wrapped:
         monkeypatch.setattr('sys.stdin', io.StringIO(None))
-        amazon_linux_extras.main()
+        amzn2extra.main()
     assert wrapped.value.code == 1
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from amazon_linux_extras import Topic
+from amzn2extra import Topic
 
 
 @pytest.mark.parametrize(
