@@ -46,6 +46,9 @@ EXAMPLES = '''
 from ansible.module_utils.basic import AnsibleModule
 
 
+COMMAND_PATH = '/usr/bin/amazon-linux-extras'
+
+
 class Topic(object):
     """Topic on amazon extra library
     """
@@ -71,6 +74,23 @@ class Topic(object):
         return cls(name, version, status)
 
 
+# TODO: Test cases are not exists
+def fetch_list(module):
+    cmd = [COMMAND_PATH, 'list']
+    rc, out, err = module.run_command(cmd)
+    lines = []
+    append_cur_line = False
+    for o in out.split('\n'):
+        if o == '':
+            continue
+        if append_cur_line:
+            lines[-1] += o
+        else:
+            lines.append(o)
+        append_cur_line = not o.endswith(']')
+    return [Topic.from_text(l) for l in lines]
+
+
 def run_module():
     module_args = dict(
         name=dict(type='str', required=True),
@@ -90,6 +110,13 @@ def run_module():
 
     if module.check_mode:
         module.exit_json(**result)
+
+    # Topic matching
+    # TODO: Not test
+    extras = fetch_list(module)
+    topic_name = module.params['name']
+    if not [e for e in extras if e.name == topic_name]:
+        module.fail_json(msg='Topic is not exits', **result)
 
     module.exit_json(**result)
 
