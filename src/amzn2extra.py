@@ -91,6 +91,13 @@ def fetch_list(module):
     return [Topic.from_text(l) for l in lines]
 
 
+def update_topic_state(module, topic, next_state):
+    subcommand = 'enable' if next_state == 'present' else 'disable'
+    cmd = [COMMAND_PATH, subcommand, topic.name]
+    rc, out, err = module.run_command(cmd)
+    return rc == 0
+
+
 def run_module():
     module_args = dict(
         name=dict(type='str', required=True),
@@ -129,6 +136,9 @@ def run_module():
         pass
     else:
         # TODO: It is stub
+        cmd_ok = update_topic_state(module, topic, topic_state)
+        if not cmd_ok:
+            module.fail_json(msg='Topic toggle is failed', **result)
         result['changed'] = True
 
     module.exit_json(**result)
