@@ -111,12 +111,25 @@ def run_module():
     if module.check_mode:
         module.exit_json(**result)
 
+    topic_name = module.params['name']
+    topic_state = module.params['state']
     # Topic matching
     # TODO: Not test
     extras = fetch_list(module)
-    topic_name = module.params['name']
-    if not [e for e in extras if e.name == topic_name]:
+    topics = [e for e in extras if e.name == topic_name]
+    if not topics:
         module.fail_json(msg='Topic is not exits', **result)
+
+    topic = topics[0]
+    if topic_state == 'present' and topic.status == 'enabled':
+        # Not run (already enabled)
+        pass
+    elif topic_state == 'absent' and topic.status == 'available':
+        # Not run (already disabled)
+        pass
+    else:
+        # TODO: It is stub
+        result['changed'] = True
 
     module.exit_json(**result)
 
