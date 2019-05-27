@@ -2,4 +2,5 @@
 # ======================================
 # Test command
 # ======================================
-echo '   999  example            available    [ =1.0 ]'
+echo '   999  example1           available    [ =1.0 ]'
+echo '   999  example2           enabled      [ =1.0 ]'
