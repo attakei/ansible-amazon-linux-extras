@@ -19,6 +19,11 @@ Amazon Linux 2 can manage package by ``yum`` , but it does not handle Extra Libr
 This module can handle `amazon-linux-extras`
 
 
+Usage
+-----
+
+Copy ``amzn2extra.py`` from this project to your local module path.
+
 
 License
 -------

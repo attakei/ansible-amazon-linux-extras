@@ -13,7 +13,7 @@ ANSIBLE_METADATA = {
 
 DOCUMENTATION = '''
 ---
-module: amazon_linux_extras
+module: amzn2extra
 
 short_description: Manage topics of amazon-linux-extras
 
@@ -39,7 +39,7 @@ options:
 EXAMPLES = '''
 # Enable "vim" topic
 - name: Enable vim
-  ansible_linux_extras:
+  amzn2extra:
     name: vim
 '''
 
