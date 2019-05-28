@@ -43,7 +43,7 @@ EXAMPLES = '''
     name: vim
 '''
 
-from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.basic import AnsibleModule  # flake8: noqa=E402
 
 
 COMMAND_PATH = '/usr/bin/amazon-linux-extras'
