@@ -1,5 +1,6 @@
 - hosts: local
   tasks:
+    # If amzn2extra does not run, install PHP 5.4.x
     - name: Enable topic of PHP-7.3
       amzn2extra: name=php7.3
     - name: Install PHP-7.3
