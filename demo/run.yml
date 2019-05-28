@@ -1,0 +1,6 @@
+- hosts: local
+  tasks:
+    - name: Enable topic of PHP-7.3
+      amzn2extra: name=php7.3
+    - name: Install PHP-7.3
+      yum: name=php state=present

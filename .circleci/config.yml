@@ -30,12 +30,17 @@ jobs:
           pip install --user pipenv
           pipenv install --dev
       - run: pipenv run pytest
-  test:
+  playbook:
     docker:
       - image: amazonlinux:2
     steps:
       - run: amazon-linux-extras install -y ansible2
-
+      - checkout
+      - run: |
+          mkdir -p ~/.ansible/plugins/modules/
+          cp amzn2extra.py ~/.ansible/plugins/modules/
+          ansible-playbook -i demo/inventory.yml demo/run.yml
+      - run: php -v
 workflows:
   version: 2
   test:
@@ -43,4 +48,4 @@ workflows:
       - flake8
       - doclint
       - pytest
-      - test
+      - playbook
