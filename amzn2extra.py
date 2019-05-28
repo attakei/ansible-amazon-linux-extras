@@ -43,7 +43,7 @@ EXAMPLES = '''
     name: vim
 '''
 
-from ansible.module_utils.basic import AnsibleModule  # flake8: noqa=E402
+from ansible.module_utils.basic import AnsibleModule  # noqa: flake8=E402
 
 
 COMMAND_PATH = '/usr/bin/amazon-linux-extras'
@@ -61,10 +61,10 @@ class Topic(object):
     def from_text(cls, line):
         import re
         regex = re.compile(
-            '\s+\d+\s+'
-            '(?P<name>\S+)\s+'
-            '(?P<status>\S+)\s+'
-            '.+'
+            r'\s+\d+\s+'
+            r'(?P<name>\S+)\s+'
+            r'(?P<status>\S+)\s+'
+            r'.+'
         )
         matched = regex.match(line)
         name_version = matched.group('name').split('=')

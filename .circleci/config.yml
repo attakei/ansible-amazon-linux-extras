@@ -8,6 +8,17 @@ jobs:
           ANSIBLE_LIBRARY: './src'
     steps:
       - run: ansible-doc -t module amazon_linux_extras
+  flake8:
+    docker:
+      - image: circleci/python:2.7-node
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout
+      - run: |
+          pip install --user pipenv
+          pipenv install --dev
+      - run: pipenv run flake8
   pytest:
     docker:
       - image: circleci/python:2.7-node
@@ -29,6 +40,7 @@ workflows:
   version: 2
   test:
     jobs:
+      - flake8
       - doclint
       - pytest
       - test
