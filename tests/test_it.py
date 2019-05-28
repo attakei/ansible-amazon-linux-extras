@@ -2,6 +2,7 @@ import io
 import json
 
 import pytest
+from ansible.module_utils.six import PY2, BytesIO
 
 import amzn2extra
 
@@ -11,15 +12,27 @@ def _run_module(monkeypatch, param):
         'ANSIBLE_MODULE_ARGS': param
     }
     monkeypatch.setattr('amzn2extra.COMMAND_PATH', './tests/cmd')
+    if PY2:
+        monkeypatch.setattr(
+            'sys.stdin',
+            BytesIO(json.dumps(param))
+        )
+    else:
+        monkeypatch.setattr(
+            'sys.stdin',
+            io.TextIOWrapper(BytesIO(json.dumps(param).encode()))
+        )
     with pytest.raises(SystemExit) as wrapped:
-        monkeypatch.setattr('sys.stdin', io.BytesIO(json.dumps(param)))
         amzn2extra.main()
     return wrapped.value
 
 
 def test_no_args(capsys, monkeypatch):
+    if PY2:
+        monkeypatch.setattr('sys.stdin', BytesIO(None))
+    else:
+        monkeypatch.setattr('sys.stdin', io.TextIOWrapper(BytesIO(None)))
     with pytest.raises(SystemExit) as wrapped:
-        monkeypatch.setattr('sys.stdin', io.StringIO(None))
         amzn2extra.main()
     assert wrapped.value.code == 1
 
