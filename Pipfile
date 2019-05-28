@@ -10,6 +10,3 @@ ansible = "*"
 pytest = "*"
 pytest-pythonpath = "*"
 "flake8" = "*"
-
-[requires]
-python_version = "2.7"
