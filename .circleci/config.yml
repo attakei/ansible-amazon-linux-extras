@@ -19,7 +19,7 @@ jobs:
           pip install --user pipenv
           pipenv install --dev
       - run: pipenv run flake8
-  pytest:
+  pytest-python2:
     docker:
       - image: circleci/python:2.7-node
         environment:
@@ -58,6 +58,16 @@ workflows:
     jobs:
       - flake8
       - doclint
-      - pytest
-      - pytest-python3
-      - playbook
+      - pytest-python2:
+          requires:
+            - flake8
+            - doclint
+      - pytest-python3:
+          requires:
+            - flake8
+            - doclint
+      - playbook:
+          requires:
+            - pytest-python2
+            - pytest-python3
+
