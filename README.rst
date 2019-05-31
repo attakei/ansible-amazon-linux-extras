@@ -24,6 +24,7 @@ Usage
 
 Copy ``amzn2extra.py`` from this project to your local module path.
 
+See `Ansible official document <https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html>`_
 
 License
 -------
